@@ -2,39 +2,48 @@
 #include<cstdlib>
 #include <time.h> 
 using namespace std;
-
-int FibR(int n)
+int c = 1;
+long int fib(int n) /* rekurencyjna */
 {
-	if (n < 3)
-		return 1;
-
-	return FibR(n - 2) + FibR(n - 1);
-}
-void FibI(int n)
-{
-	long long a = 0, b = 1;
-
-	for (int i = 0; i < n; i++)
-	{
-		cout << b << " ";
-		b += a; //pod zmienn¹ b przypisujemy wyraz nastêpny czyli a+b
-		a = b - a; //pod zmienn¹ a przypisujemy wartoœæ zmiennej b
+	if (c == 1) {
+		c--; 
+		n--;
 	}
+	if (n == 1 || n == 2)
+		return 1;
+	else if (n == 0)
+		return 0;
+	else
+		return fib(n - 1) + fib(n - 2);
+}
+
+long int fib2(int n) /* iteracyjna */
+{
+	n--;
+	int x0 = 0;
+	int x1 = 1;
+
+	for (int i = 0; i < n; ++i) {
+		int temp = x0 + x1;
+		x0 = x1;
+		x1 = temp;
+	}
+	return x0;
 }
 
 int main()
 {
 	time_t t, tt;
 	
-	int n = 50;
+	int n = 10;
 	
 	t = clock();
-	cout << n << " wyraz ciagu ma wartosc " << FibR(n) << endl;
+	cout << n << " wyraz ciagu ma wartosc " << fib(n) << endl;
 	t = clock() - t;
 	cout << "Rekurencyjnie " <<t<< endl;
 
 	tt = clock();
-	FibI(n);
+	cout << n <<" wyraz ciagu ma wartosc "<< fib2(n) << endl;;
 	tt = clock() - tt;
 	cout << "Iteracyjnie " << tt << endl;
 
